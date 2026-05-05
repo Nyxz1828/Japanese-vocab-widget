@@ -1,0 +1,18 @@
+﻿{
+    "ok":  true,
+    "created_at":  "2026-05-05 17:20:09",
+    "python_command":  "py",
+    "python_prefix_args":  [
+                               "-3"
+                           ],
+    "python_path":  "C:\\Users\\User\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+    "app_dir":  "E:\\Code\\Personal_Use\\JP_widget\\app",
+    "main_py":  "E:\\Code\\Personal_Use\\JP_widget\\app\\main.py",
+    "required_modules":  [
+                             "json",
+                             "urllib.request",
+                             "random",
+                             "tkinter",
+                             "time"
+                         ]
+}
