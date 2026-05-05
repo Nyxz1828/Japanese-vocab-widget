@@ -1,9 +1,9 @@
 import json
 import urllib.request
 import random
-
 import tkinter as tk
 import time 
+
 def get_random(max_number):
     return random.randint(0, max_number)
 
@@ -16,8 +16,6 @@ def load_words():
     n1 = []
 
     all_vocab = []
-
-    a = 1
 
     for level in levels:
         url = f"https://raw.githubusercontent.com/wkei/jlpt-vocab-api/main/data-source/db/{level}.json"
@@ -41,9 +39,6 @@ def load_words():
         print(f"Loaded {level}: {len(vocab)} words")
 
     print(f"Total words: {len(all_vocab)}")
-    print(all_vocab[0])
-    word = all_vocab[get_random(5000)]
-    print(get_random(5000))
     
     return n5, n4, n3, n2, n1, all_vocab
 
@@ -73,11 +68,14 @@ if __name__ == "__main__":
     current_index = 0
     selected_word = word_array[current_index]
 
+    font_offset = 0
+    alpha_value = 0.7
+
     root = tk.Tk()
 
     root.overrideredirect(True)
     root.attributes("-topmost", True)
-    root.attributes("-alpha", 0.7)
+    root.attributes("-alpha", alpha_value)
     root.geometry("320x170+100+100")
     root.configure(bg="black")
 
@@ -129,37 +127,80 @@ if __name__ == "__main__":
 
         update_selected_word()
 
-    def change_level_and_close(level, window):
-        reset_word_array(level)
-        window.destroy()
+    def update_ui_fonts():
+        furigana_label.config(font=("Arial", max(4, 8 + font_offset)))
+        word_label.config(font=("Arial", max(8, 18 + font_offset)))
+        meaning_label.config(font=("Arial", max(6, 12 + font_offset)))
 
     def open_settings():
         settings_window = tk.Toplevel(root)
         settings_window.title("Settings")
-        settings_window.geometry("180x260+450+100")
+        settings_window.geometry("220x450+450+100")
         settings_window.configure(bg="black")
         settings_window.attributes("-topmost", True)
 
-        title = tk.Label(
-            settings_window,
-            text="Select JLPT Level",
-            font=("Arial", 12),
-            fg="white",
-            bg="black"
-        )
-        title.pack(pady=10)
+        level_frame = tk.Frame(settings_window, bg="black")
+        level_frame.pack(fill="x", padx=10, pady=5)
+        
+        tk.Label(level_frame, text="Select JLPT Level", font=("Arial", 11), fg="white", bg="black").pack(pady=5)
 
         for level in ["N5", "N4", "N3", "N2", "N1", "ALL"]:
             btn = tk.Button(
-                settings_window,
+                level_frame,
                 text=level,
-                font=("Arial", 11),
+                font=("Arial", 10),
                 fg="white",
                 bg="gray20",
                 borderwidth=0,
-                command=lambda lv=level: change_level_and_close(lv, settings_window)
+                command=lambda lv=level: reset_word_array(lv)
             )
-            btn.pack(fill="x", padx=20, pady=4)
+            btn.pack(fill="x", padx=20, pady=2)
+
+        font_frame = tk.Frame(settings_window, bg="black")
+        font_frame.pack(fill="x", padx=10, pady=10)
+        
+        tk.Label(font_frame, text="Font Size Offset", font=("Arial", 11), fg="white", bg="black").pack()
+
+        def on_font_change(val):
+            global font_offset
+            font_offset = int(val)
+            update_ui_fonts()
+
+        font_scale = tk.Scale(
+            font_frame, from_=-5, to=20, orient="horizontal",
+            fg="white", bg="black", highlightthickness=0, command=on_font_change
+        )
+        font_scale.set(font_offset)
+        font_scale.pack(fill="x", padx=10)
+
+        trans_frame = tk.Frame(settings_window, bg="black")
+        trans_frame.pack(fill="x", padx=10, pady=5)
+        
+        tk.Label(trans_frame, text="Window Transparency", font=("Arial", 11), fg="white", bg="black").pack()
+
+        def on_alpha_change(val):
+            global alpha_value
+            alpha_value = float(val)
+            root.attributes("-alpha", alpha_value)
+
+        alpha_scale = tk.Scale(
+            trans_frame, from_=0.1, to=1.0, resolution=0.05, orient="horizontal",
+            fg="white", bg="black", highlightthickness=0, command=on_alpha_change
+        )
+        alpha_scale.set(alpha_value)
+        alpha_scale.pack(fill="x", padx=10)
+
+        close_btn = tk.Button(
+            settings_window,
+            text="Close Settings",
+            font=("Arial", 10),
+            fg="white",
+            bg="gray30",
+            borderwidth=0,
+            command=settings_window.destroy
+        )
+        close_btn.pack(pady=15, fill="x", padx=40)
+
 
     furigana_label = tk.Label(
         root,
@@ -252,5 +293,6 @@ if __name__ == "__main__":
         widget.bind("<B1-Motion>", move_window)
 
     update_selected_word()
+    update_ui_fonts()
 
     root.mainloop()
