@@ -1,12 +1,6 @@
-# JP Vocab Widget
+# JP Vocab Widget for Mobile
 
 ## Quick Start
-
-Download the project and press the `.exe` file to start the widget.
-
-You can also download it from Google Drive:
-
-https://drive.google.com/drive/folders/1g9RX1_DDhRdSSDXLTqaIw8R1R-2Ve9E1
 
 This widget is designed to run while you are working, so you can keep seeing Japanese vocabulary and slowly remember new words during daily use.
 
@@ -14,13 +8,21 @@ This widget is designed to run while you are working, so you can keep seeing Jap
 
 ## Description
 
-JP Vocab Widget is a small desktop vocabulary widget for learning Japanese while working. The widget stays always on top of all windows and pages, so the vocabulary remains visible while using other apps, browsers, or documents.
+JP Vocab Widget is a small mobile-friendly vocabulary widget for learning Japanese on the go. It keeps Japanese words, furigana, and meanings easy to check while you use other apps on your phone or tablet.
 
-The window is half-transparent, making it less distracting while still allowing users to review Japanese words, furigana, and meanings during daily work or study.
-
-
+The interface is designed to stay unobtrusive, making it easy to review vocabulary during commuting, breaks, or daily study sessions.
 
 ---
+## To Do
+- Available on both Android and iOS.
+- Create a simple widget that displays one Japanese word with furigana and meaning.
+- Use the JLPT vocabulary data from the provided JSON source.
+- PiP support
+- Widget support
+- Favorite words
+- Auto-change vocabulary every few seconds or minutes
+- Notification to show new vocabulary
+
 
 
 ## How to Change Code
